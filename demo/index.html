@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="../">
+  <title>Codex 卡通启动动画 · 独立演示</title>
+  <style>
+    html,body,#root{height:100%;margin:0}
+    body{background:#101114;color:#eee;font:14px "Segoe UI",system-ui}
+    .demo{height:100%;display:grid;grid-template-columns:220px 1fr}
+    .rail{padding:30px;border-right:1px solid #272930;color:#9297a1}
+    .conversation{display:flex;align-items:center;justify-content:center;padding:32px}
+    .center{width:min(650px,90%)}
+    h1{font-size:30px;font-weight:500;letter-spacing:-.8px}
+    p{color:#939aa8;line-height:1.7}
+    .composer{min-height:90px;margin-top:32px;border:1px solid #3b3e47;background:#1a1c23;border-radius:18px;padding:20px;outline:none}
+    button{border:1px solid #3b3e47;color:#c5c9d4;background:#20222a;border-radius:8px;padding:10px 16px;cursor:pointer}
+    @media(max-width:600px){.demo{grid-template-columns:1fr}.rail{display:none}}
+    
+    #codex-startup-visual { position:fixed; inset:0; z-index:2147483647; overflow:hidden;
+      background:#f6f5e9; color:#152723; isolation:isolate; opacity:1; contain:layout paint;
+      font-family:"Arial Rounded MT Bold","Microsoft YaHei","Segoe UI",sans-serif;
+      transition:opacity 220ms ease; }
+    #codex-startup-visual::before { content:""; position:absolute; inset:0;
+      background:radial-gradient(circle,#6ca98b30 1.4px,transparent 1.8px) 0 0/18px 18px;
+      pointer-events:none; }
+    #codex-startup-visual .cs-media { position:absolute; inset:0; width:100%; height:100%;
+      display:block; object-fit:contain; pointer-events:none; }
+    #codex-startup-visual video.cs-media { opacity:0; }
+    #codex-startup-visual[data-video="story"] #cs-story-video,
+    #codex-startup-visual[data-video="burst"] #cs-burst-video { opacity:1; }
+    #codex-startup-visual[data-video="story"] #cs-poster,
+    #codex-startup-visual[data-video="burst"] #cs-poster { opacity:0; }
+    #codex-startup-visual .cs-ui { position:absolute; top:22px; left:28px; right:28px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px; pointer-events:none; }
+    #codex-startup-visual .cs-brand { font-size:13px; font-weight:900; letter-spacing:2px; }
+    #codex-startup-visual .cs-chapter { background:#fffaf0; border:2px solid #18322a;
+      border-radius:999px; padding:7px 14px; font-size:12px; font-weight:800;
+      box-shadow:3px 3px 0 #18322a; }
+    #codex-startup-visual .cs-footer { position:absolute; bottom:20px; left:28px; right:28px;
+      display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    #codex-startup-visual .cs-status { font-size:12px; font-weight:700; color:#486158; }
+    #codex-startup-visual .cs-skip { appearance:none; background:#fffaf0; color:#18322a;
+      border:2px solid #18322a; border-radius:999px; padding:8px 14px;
+      font:700 12px/1.2 "Microsoft YaHei","Segoe UI",sans-serif; cursor:pointer; }
+    #codex-startup-visual .cs-skip:focus-visible { outline:3px solid #00a66c; outline-offset:3px; }
+    #codex-startup-visual[data-leaving] { pointer-events:none; }
+    #codex-startup-visual[data-leaving="ready"] { will-change:opacity; }
+    #codex-startup-visual[data-exit-mode="fade"] { opacity:0; }
+    #codex-startup-visual[data-exit-mode="comic"] .cs-ui,
+    #codex-startup-visual[data-exit-mode="comic"] .cs-footer { opacity:0; }
+    @media (max-width:600px) { #codex-startup-visual .cs-ui { top:16px; left:16px; right:16px; }
+      #codex-startup-visual .cs-brand { font-size:10px; letter-spacing:1px; }
+      #codex-startup-visual .cs-chapter { font-size:10px; padding:6px 9px; }
+      #codex-startup-visual .cs-footer { bottom:16px; left:16px; right:16px; }
+      #codex-startup-visual .cs-status { font-size:10px; max-width:55%; }
+      #codex-startup-visual .cs-skip { font-size:10px; padding:7px 10px; } }
+    @media (max-height:440px) { #codex-startup-visual .cs-ui { top:10px; }
+      #codex-startup-visual .cs-footer { bottom:10px; } }
+    @media (prefers-reduced-motion:reduce) { #codex-startup-visual { transition-duration:120ms; } }
+  
+    #codex-startup-visual{animation:cs-failsafe 17s step-end forwards}
+    @keyframes cs-failsafe{to{visibility:hidden;pointer-events:none}}
+  </style>
+</head>
+<body>
+  <div id="root"><div class="startup-loader" role="status">正在准备独立演示…</div></div>
+  <div id="codex-startup-visual" aria-label="Codex 正在启动">
+    <img id="cs-poster" class="cs-media" src="./assets/codex-poster-v8.png" alt="" aria-hidden="true" draggable="false">
+    <video id="cs-story-video" class="cs-media" src="./assets/codex-story-v8.webm" preload="auto" muted playsinline disablepictureinpicture aria-hidden="true"></video>
+    <video id="cs-burst-video" class="cs-media" src="./assets/codex-burst-v8.webm" preload="auto" muted playsinline disablepictureinpicture aria-hidden="true"></video>
+    <div class="cs-ui"><span class="cs-brand">CODEX / 灵感补给站</span><span class="cs-chapter">01 · 超大瓶登场</span></div>
+    <div class="cs-footer"><span class="cs-status" role="status" aria-live="polite">正在开启对话界面</span><button type="button" class="cs-skip">点击 / Esc 跳过</button></div>
+    </div>
+  <script src="src/video-startup.js"></script>
+  <script src="src/readiness.js"></script>
+  <script>
+    // Simulate an application's editable composer becoming ready. No service is contacted.
+    setTimeout(() => {
+      document.getElementById('root').innerHTML = `
+        <div class="demo"><aside class="rail">Codex<br><br>独立动画演示</aside>
+          <main class="conversation"><div class="center">
+            <h1>今天想探索什么？</h1><p>这是本地演示输入框，内容不会发送。</p>
+            <div class="composer" data-codex-composer="true" contenteditable="true" aria-label="演示输入框"></div>
+            <p><button id="replay" type="button">重播启动效果</button></p>
+          </div></main></div>`;
+      document.getElementById('replay').addEventListener('click', () => location.reload());
+    }, 3000);
+  </script>
+</body>
+</html>

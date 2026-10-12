@@ -1,0 +1,16 @@
+{
+  "name": "codex-startup-animation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A standalone cartoon startup overlay with locally rendered 60 fps video.",
+  "license": "MIT",
+  "engines": { "node": ">=20.9.0" },
+  "scripts": {
+    "start": "node scripts/serve.cjs",
+    "build:demo": "node scripts/build-demo.cjs",
+    "test": "node tests/project.test.cjs && node tests/server.test.cjs && node tests/drawing.test.cjs && node tests/video.test.cjs",
+    "render": "node scripts/render-frames.cjs",
+    "media:encode": "python scripts/encode-video.py"
+  },
+  "devDependencies": { "sharp": "^0.35.5" }
+}
